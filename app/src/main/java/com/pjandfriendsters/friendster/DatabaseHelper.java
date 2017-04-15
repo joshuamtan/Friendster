@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jayem on 4/14/17.
  */
@@ -17,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE Friends " + "(id INTEGER PRIMARY KEY AUTO_INCREMENT, name TEXT);");
+        db.execSQL("CREATE TABLE Friends " + "(id INTEGER PRIMARY KEY, name TEXT);");
     }
 
     public void onUpgrade(SQLiteDatabase db, int prevVersion, int newVersion){
@@ -38,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete("Friends", "id = ? ", new String[] {Integer.toString(id)});
     }
 
-    public boolean editContactName(Integer id, String name){
+    public boolean editFriend(Integer id, String name){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
@@ -46,9 +49,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getData(Integer id) {
+    public ArrayList<Friend> getAllFriends(List<Friend> src) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM Friends where id = "+id+"", null);
-        return res;
+        ArrayList<Friend> friends = new ArrayList<Friend>();
+        Friend friend = new Friend();
+
+        Cursor res = db.rawQuery("SELECT * FROM Friends", null);
+        res.moveToFirst();
+
+        while (res.isAfterLast() == false){
+            if(src.isEmpty()){
+                friend = new Friend(1, res.getString(res.getColumnIndex("name")));
+            }else {
+                friend = new Friend(src.get(src.size()-1).getId()+1, res.getString(res.getColumnIndex("name")));
+            }
+
+
+            friends.add(friend);
+            res.moveToNext();
+        }
+        return friends;
     }
 }

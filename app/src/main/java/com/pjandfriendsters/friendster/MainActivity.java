@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Friend> friendList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FriendAdapter friendAdapter;
+    private DatabaseHelper dbhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 Intent i = new Intent(MainActivity.this, Add_Friend.class);
                 startActivity(i);
             }
@@ -50,25 +52,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareFriendData() {
-        Friend friend = new Friend(1, "Jonathan A. Arino");
-        friendList.add(friend);
+        dbhelper = new DatabaseHelper(this);
+//        Friend friend = new Friend(1, "Jonathan A. Arino");
+//        friendList.add(friend);
 
-        friend = new Friend(2, "Joshua Miguel A. Tan");
-        friendList.add(friend);
-
-        friend = new Friend(3, "Meika Lei Dane");
-        friendList.add(friend);
-
-        friend = new Friend(4, "Krezly Plata");
-        friendList.add(friend);
-
-        friend = new Friend(5, "Rain Tomista");
-        friendList.add(friend);
-
-        friend = new Friend(6, "Edward Pascual");
-        friendList.add(friend);
+//        friend = new Friend(2, "Joshua Miguel A. Tan");
+//        friendList.add(friend);
+//
+//        friend = new Friend(3, "Meika Lei Dane");
+//        friendList.add(friend);
+//
+//        friend = new Friend(4, "Krezly Plata");
+//        friendList.add(friend);
+//
+//        friend = new Friend(5, "Rain Tomista");
+//        friendList.add(friend);
+//
+//        friend = new Friend(6, "Edward Pascual");
+//        friendList.add(friend);
+        friendList.addAll(dbhelper.getAllFriends(friendList));
 
         friendAdapter.notifyDataSetChanged();
+
     }
 
     @Override
