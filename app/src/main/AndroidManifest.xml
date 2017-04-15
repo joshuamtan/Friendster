@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Edit_Friend_Activity"
+            android:label="@string/title_activity_edit__friend_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Add_Friend"
+            android:label="@string/title_activity_add__friend"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
