@@ -53,23 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareFriendData() {
         dbhelper = new DatabaseHelper(this);
-//        Friend friend = new Friend(1, "Jonathan A. Arino");
-//        friendList.add(friend);
 
-//        friend = new Friend(2, "Joshua Miguel A. Tan");
-//        friendList.add(friend);
-//
-//        friend = new Friend(3, "Meika Lei Dane");
-//        friendList.add(friend);
-//
-//        friend = new Friend(4, "Krezly Plata");
-//        friendList.add(friend);
-//
-//        friend = new Friend(5, "Rain Tomista");
-//        friendList.add(friend);
-//
-//        friend = new Friend(6, "Edward Pascual");
-//        friendList.add(friend);
         friendList.addAll(dbhelper.getAllFriends(friendList));
 
         friendAdapter.notifyDataSetChanged();

@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE Friends " + "(id INTEGER PRIMARY KEY, name TEXT);");
+        db.execSQL("CREATE TABLE Friends " + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);");
     }
 
     public void onUpgrade(SQLiteDatabase db, int prevVersion, int newVersion){
@@ -58,12 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         res.moveToFirst();
 
         while (res.isAfterLast() == false){
-            if(src.isEmpty()){
-                friend = new Friend(1, res.getString(res.getColumnIndex("name")));
-            }else {
-                friend = new Friend(src.get(src.size()-1).getId()+1, res.getString(res.getColumnIndex("name")));
-            }
 
+            friend = new Friend(res.getInt(res.getColumnIndex("id")), res.getString(res.getColumnIndex("name")));
 
             friends.add(friend);
             res.moveToNext();

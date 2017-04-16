@@ -1,8 +1,10 @@
 package com.pjandfriendsters.friendster;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
         public TextView name;
+        public Integer id;
 
         public MyViewHolder(View view) {
             super(view);
@@ -29,12 +32,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Activity activity = (Activity) v.getContext();
+                    activity.finish();
                     Intent i = new Intent(v.getContext(), Edit_Friend_Activity.class);
 
                     final TextView friendName = (TextView) v.findViewById(R.id.name);
                     String friend = friendName.getText().toString();
                     i.putExtra("friendName", friend);
-
+                    i.putExtra("friendId", id);
                     v.getContext().startActivity(i);
                 }
             });
@@ -57,6 +62,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
     public void onBindViewHolder(FriendAdapter.MyViewHolder holder, int position) {
         Friend friend = friendsList.get(position);
         holder.name.setText(friend.getName());
+        holder.id = friend.getId();
     }
 
     @Override
